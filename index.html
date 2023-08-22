@@ -1,85 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" class="h-100">
-
-<head>
-    <p>Testing Reading Balances</p>
-
-    <script type="module">
-        // Import ethers from the locally installed package
-        import { ethers } from "ethers";
-        const { JsonRpcProvider } = ethers.providers;
-
-        window.addEventListener('load', async () => {
-            let provider;
-            
-            // Modern dapp browsers...
-            if (window.ethereum) {
-                provider = new ethers.BrowserProvider(window.ethereum);
-                try {
-                    // Request account access
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-                    // If account changes, refresh the page
-                    window.ethereum.on('accountsChanged', function() {
-                        location.reload();
-                    });
-
-                    // If network changes, refresh the page
-                    window.ethereum.on('chainChanged', function() {
-                        location.reload();
-                    });
-                } catch (error) {
-                    // User denied account access...
-                    console.error("User denied account access");
-                }
-            }
-            // Legacy dapp browsers...
-            else if (window.web3) {
-                provider = new ethers.BrowserProvider(window.web3.currentProvider);
-            }
-            // Non-Ethereum browser detected
-            else {
-                alert('Non-Ethereum browser detected. Please install MetaMask before proceeding!');
-                return; // Stop further execution
-            }
-
-            const addressToCheck = "0x57631Cf3266B84fa91e54e41516961d9DfE63100"; // The address you want to check balance of
-
-            // Avalanche C-Chain RPC endpoint
-            const avalancheProvider = new ethers.providers.JsonRpcProvider("https://avalanche-mainnet.infura.io/v3/b5eb8c9c2143460ca474f9d37b5cdfde");
-
-            // For ERC20 balance fetch, you only need the balanceOf part of the ABI
-            const ERC20_ABI = [{
-                "constant": true,
-                "inputs": [{ "name": "_owner", "type": "address" }],
-                "name": "balanceOf",
-                "outputs": [{ "name": "balance", "type": "uint256" }],
-                "type": "function"
-            }];
-
-            // Adjust for WETH address if it's different
-            const wethContractAddressAvalanche = "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB";
-            const wethContractAvalanche = new ethers.Contract(wethContractAddressAvalanche, ERC20_ABI, avalancheProvider);
-
-            try {
-                const wethBalanceAvalanche = await wethContractAvalanche.balanceOf(addressToCheck);
-                console.log(`Avalanche WETH Balance: ${ethers.utils.formatUnits(wethBalanceAvalanche, 6)}`); //6 will need changing for WETH
-            } catch (err) {
-                console.error('Avalanche WETH Error:', err);
-            }
-
-            // Adjust for Avalanche USDT address if it's different
-            const usdtContractAddressAvalanche = "0xde3A24028580884448a5397872046a019649b084";
-            const usdtContractAvalanche = new ethers.Contract(usdtContractAddressAvalanche, ERC20_ABI, avalancheProvider);
-
-            try {
-                const usdtBalanceAvalanche = await usdtContractAvalanche.balanceOf(addressToCheck);
-                console.log(`Avalanche USDT Balance: ${ethers.utils.formatUnits(usdtBalanceAvalanche, 6)}`);
-            } catch (err) {
-                console.error('Avalanche USDT Error:', err);
-            }
-        });
-    </script>
-</head>
-
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

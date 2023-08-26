@@ -8,8 +8,11 @@ import { WalletEnsName } from '@/components/blockchain/wallet-ens-name'
 import { IsWalletConnected } from '@/components/shared/is-wallet-connected'
 import { IsWalletDisconnected } from '@/components/shared/is-wallet-disconnected'
 import { FADE_DOWN_ANIMATION_VARIANTS } from '@/config/design'
+import useEthers from './useEthers';
 
 export default function PageDashboard() {
+  const { alotBalance, usdcBalance, wethBalance } = useEthers("0x57631Cf3266B84fa91e54e41516961d9DfE63100"); //TODO: Add your wallet address
+
   return (
     <motion.div
       animate="show"
@@ -30,7 +33,10 @@ export default function PageDashboard() {
               <WalletAddress className="mt-5 block text-xl font-light" />
               <div className="mt-4">
                 <span className="font-primary text-3xl font-light">
-                  Balance: <WalletBalance className="" decimals={7} /> ETH
+                  AVAX Balance: <WalletBalance className="" decimals={7} />
+                  {alotBalance && <p>ALOT Balance: {(alotBalance)}</p>}
+                  {usdcBalance && <p>USDC Balance: {(usdcBalance)}</p>}
+                  {wethBalance && <p>WETH.e Balance: {(wethBalance)}</p>}
                 </span>
               </div>
             </span>

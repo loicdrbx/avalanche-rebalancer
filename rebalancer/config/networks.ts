@@ -5,6 +5,8 @@ import { Chain, configureChains } from 'wagmi'
 import {
   goerli as goerliNoIcon,
   mainnet,
+  avalancheFuji,
+  avalanche,
 } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
@@ -17,8 +19,8 @@ const goerli = {
   iconUrl: '/icons/NetworkEthereumTest.svg',
 }
 
-export const ETH_CHAINS_TEST = [goerli]
-export const ETH_CHAINS_PROD = [mainnet]
+export const ETH_CHAINS_TEST = [goerli, avalancheFuji]
+export const ETH_CHAINS_PROD = [mainnet, avalanche]
 export const ETH_CHAINS_DEV =
   env.NEXT_PUBLIC_PROD_NETWORKS_DEV === 'true'
     ? [...ETH_CHAINS_PROD, ...ETH_CHAINS_TEST]

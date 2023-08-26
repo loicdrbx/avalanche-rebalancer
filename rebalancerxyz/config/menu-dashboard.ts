@@ -3,11 +3,11 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 export const menuDashboard = [
   {
-    label: 'Dashboard',
+    label: '',
     href: '/dashboard',
   },
   {
-    label: 'Account',
+    label: '',
     href: '/dashboard/account',
   },
 ]

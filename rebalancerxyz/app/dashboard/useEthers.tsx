@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
+
 declare global {
     interface Window {
-      ethereum: any; //TODO: needs changing?
+      ethereum: any;
     }
   }
   
@@ -46,8 +47,8 @@ const useEthers = (address: string): Balances => {
 
         //ALOT
         alotContract = new ethers.Contract("0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6", abi, provider);
-        const alotBalance = await alotContract.balanceOf(address);
-
+        const alotBalance = await alotContract.balanceOf(address)
+        
         //WETH.e
         wethContract = new ethers.Contract("0xc42E4b495020b87a2f2F7b4fb817F79fcF7043E2", abi, provider);
         const wethBalance = await wethContract.balanceOf(address);

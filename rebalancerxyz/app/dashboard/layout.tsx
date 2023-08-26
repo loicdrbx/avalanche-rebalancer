@@ -52,9 +52,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </div>
             <div className="px-8">
               <WalletConnect />
-              <LinkComponent className="link my-2 mt-8 inline-block text-xs" href="/admin">
-                Admin
-              </LinkComponent>
             </div>
             <hr className="my-4 opacity-25" />
             <DashboardFooter className="px-8 " />

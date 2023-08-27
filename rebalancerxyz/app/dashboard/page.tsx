@@ -16,7 +16,26 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import AllocationTable from './allocationTable'
 
+
+const sampleData = [
+  {
+    asset: 'Stock A',
+    currentAllocation: 40,
+    targetAllocation: 50,
+    delta: -10,
+    buySellAmount: 1000,
+  },
+  {
+    asset: 'Stock B',
+    currentAllocation: 30,
+    targetAllocation: 25,
+    delta: 5,
+    buySellAmount: -500,
+  },
+  // Add more sample data items as needed
+];
 
 export default function PageDashboard() {
   const { alotBalance, usdcBalance, wethBalance } = useEthers("0x57631Cf3266B84fa91e54e41516961d9DfE63100"); //TODO: Add your wallet address
@@ -40,6 +59,9 @@ export default function PageDashboard() {
             <span className="font-light">  
               <div className="mt-4">
                 <span className="font-primary text-3xl font-light">
+
+                <h1>Allocation Table</h1>
+                <AllocationTable data={sampleData} />
 
                 <Container fluid>
                     <Row className="justify-content-center mt-5">

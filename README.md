@@ -1,4 +1,5 @@
-# ⚡ Rebalancer: Your Portfolio Rebalancer Based On Avalanche
+# ⚡ Rebalancer
+  ## Your Portfolio Rebalancer Based On Avalanche
 
 ## 🚀 Overview
 
@@ -40,4 +41,5 @@ Frontend built in React and Typescript
 
 
 
-# 🎉 Happy Rebalancing!
+
+## 🎉 Happy Rebalancing!

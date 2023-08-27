@@ -1,27 +1,36 @@
-# React + TypeScript + Vite
+**⚡ Rebalancer: Your Portfolio Rebalancer Based On Avalanche**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**🚀 Overview**
+Struggling with expensive transaction fees and cumbersome user interfaces while managing your crypto portfolio? Welcome to Rebalancer, a blockchain-based portfolio management tool deployed on the Avalanche C-Chain. Say goodbye to high fees and say hello to a smooth, quick, and trustworthy portfolio rebalancing experience!
 
-Currently, two official plugins are available:
+**🤔 Why We're Different**
+We believe in the trustless ethos of crypto. Unlike most rebalancers that require write access to your wallet, risking your funds and data, we've built Rebalancer to preserve your control. Our app eliminates most of the legwork while allowing you to execute trades yourself, maintaining your wallet's integrity.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**🎯 Problem We're Solving**
+Traditional portfolio rebalancers can be quite a handful:
+💸 Expensive: Their transaction fees eat into your gains.
+🤔 Unfriendly UX: A design that doesn't inspire trust.
+🕒 High Latency: Slower transaction speeds can be a deal-breaker.
+Don't you wish you could rebalance without all these issues?
 
-## Expanding the ESLint configuration
+**✨ Solution: Rebalancer**
+🛠 Built on Avalanche: Benefit from lower fees and faster transactions.
+🔄 Automated Trade Prep: One click and you're at your DEX with your assets ready to be traded.
+📊 Sleek Dashboard: Visually pleasing frontend to display all your token balances.
+🔒 Secure Login: Option to log in using SpruceID's "Sign in with Ethereum".
+📈 Smart Allocation: Input your desired allocations and let Rebalancer calculate the rest!
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**🚀 Quick Start**
+Visit: Navigate to Rebalancer's web portal.
+Connect Wallet: Use SpruceID's "Sign in with Ethereum" for secure login.
+Set Allocations: Choose your desired asset allocations.
+Review: Check the calculated buy/sell amounts for each holding.
+Execute: Go to your selected DEX and confirm your trades!
 
-- Configure the top-level `parserOptions` property like this:
+**🛠 Tech Stack**
+Avalanche C-Chain
+SpruceID for Ethereum Authentication
+Frontend built in React and Typescript
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+**🎉 Happy Rebalancing!**

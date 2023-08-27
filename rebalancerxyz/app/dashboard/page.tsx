@@ -49,7 +49,7 @@ export default function PageDashboard() {
                             <tr>
                               <th>Token</th>
                               <th>Balance</th>
-                              <th>Dexalot Link</th>
+                              <th>DEX Link</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -58,27 +58,28 @@ export default function PageDashboard() {
                               <td>
                                 <WalletBalance className="" decimals={7} />
                               </td>
-                              <td>AVAX link</td>
+                              <td><a href="https://app.dexalot-test.com/trade/AVAX-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">AVAX Link</a></td>
                             </tr>
                             {alotBalance && (
                               <tr>
                                 <td>ALOT</td>
                                 <td>{alotBalance}</td>
-                                <td>ALOT link</td>
+                                <td><a href="https://app.dexalot-test.com/trade/ALOT-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">ALOT Link</a></td>
                               </tr>
                             )}
                             {usdcBalance && (
                               <tr>
                                 <td>USDC</td>
                                 <td>{usdcBalance}</td>
-                                <td>USDC link</td>
+                                <td><a href="https://app.dexalot-test.com/trade/AVAX-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">USDC Link</a></td>
                               </tr>
+                                        // There is no USDC-USDC pair, that would be silly. So I chose next best pair of AVAX-USDC.
                             )}
                             {wethBalance && (
                               <tr>
                                 <td>WETH.e</td>
                                 <td>{wethBalance}</td>
-                                <td>WETH.e link</td>
+                                <td><a href="https://app.dexalot-test.com/trade/WETH.e-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">WETH.e Link</a></td>
                               </tr>
                             )}
                           </tbody>

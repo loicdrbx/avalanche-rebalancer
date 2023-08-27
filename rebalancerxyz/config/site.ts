@@ -19,17 +19,17 @@ interface SiteConfig {
 export const SITE_CANONICAL = 'https://turboeth.xyz'
 
 export const siteConfig: SiteConfig = {
-  name: 'TurboETH',
+  name: 'Rebalancer',
   title: '',
-  emoji: '⚡',
-  description: 'Web3 App Template built using Next.js, RainbowKit, SIWE, Disco, and more!',
+  emoji: '⚖️',
+  description: 'Manage your Avalanche portfolio with ease',
   previewImg: `${SITE_CANONICAL}/preview.png`,
   localeDefault: 'en',
   links: {
-    docs: 'https://docs.turboeth.xyz/overview',
-    discord: 'https://discord.gg/U4jy7Xfh76',
-    twitter: 'https://twitter.com/district_labs',
-    github: 'https://github.com/turbo-eth',
+    docs: '',
+    discord: '',
+    twitter: '',
+    github: 'https://github.com/loicdrbx/avalanche-rebalancer',
   },
 }
 

@@ -41,6 +41,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <Image alt="Logo" height={256} src="https://raw.githubusercontent.com/asulpizi-neu/pictures/cb2b0832c6d0669bdcb3afdd0db0161e18a6d71d/logo-white.png" width={256} />
               </LinkComponent>
             </div>
+            <div className="flex justify-center">
+              <LinkComponent className="btn btn-pill bg-gradient-button px-2 hover:scale-105 hover:shadow-lg mt-4" href="https://staking.benqi.fi/stake">
+                Stake with Benqi
+              </LinkComponent>
+            </div>
             <div className="flex-1 px-8 py-5">
               <MenuDashboardSidebar className="mt-4 flex-1" />
             </div>

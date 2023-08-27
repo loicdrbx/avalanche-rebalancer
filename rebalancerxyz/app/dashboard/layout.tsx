@@ -1,4 +1,6 @@
-import { ReactNode } from 'react'
+'use client'
+
+import { ReactNode, useState } from 'react'; // Import useEffect
 
 import Image from 'next/image'
 
@@ -16,6 +18,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { siteConfig } from '@/config/site'
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
+  const [selectedOption, setSelectedOption] = useState('');
   return (
     <>
       <div className="flex h-screen flex-col lg:grid lg:grid-cols-12">
@@ -41,6 +44,40 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <Image alt="Logo" height={256} src="https://raw.githubusercontent.com/asulpizi-neu/pictures/cb2b0832c6d0669bdcb3afdd0db0161e18a6d71d/logo-white.png" width={256} />
               </LinkComponent>
             </div>
+
+            <div className="flex justify-center">
+              <div className="relative inline-block">
+                <div className="relative inline-block">
+                  <div className="relative inline-block">
+                    <div className="relative inline-block">
+                      <div className="relative inline-block">
+                        <button
+                          className="btn btn-pill bg-gradient-button px-2 hover:scale-105 hover:shadow-lg mt-4"
+                          onClick={() => setSelectedOption('')}
+                        >
+                          Set Rebalance Notification
+                        </button>
+                        {selectedOption && (
+                          <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
+                            <p className="text-lg font-bold mb-2">Select Rebalance Notification Interval:</p>
+                            <select
+                              className="btn btn-pill bg-gradient-button px-2 hover:scale-105 hover:shadow-lg"
+                              value={selectedOption}
+                              onChange={(e) => setSelectedOption(e.target.value)}
+                            >
+                              <option value="Weekly">Weekly</option>
+                              <option value="Monthly">Monthly</option>
+                              <option value="Quarterly">Quarterly</option>
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex justify-center">
               <LinkComponent className="btn btn-pill bg-gradient-button px-2 hover:scale-105 hover:shadow-lg mt-4" href="https://staking.benqi.fi/stake">
                 Stake with Benqi

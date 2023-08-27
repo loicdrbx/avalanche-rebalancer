@@ -35,23 +35,23 @@ Don't you wish you could rebalance without all these issues?
 
 ## 🚀 Quick Start
 
-Visit: Navigate to Rebalancer's web portal.
+1. Visit: Navigate to Rebalancer's web portal.
 
-Connect Wallet: Use SpruceID's "Sign in with Ethereum" for secure login.
+2. Connect Wallet: Use SpruceID's "Sign in with Ethereum" for secure login.
 
-Set Allocations: Choose your desired asset allocations.
+3. Set Allocations: Choose your desired asset allocations.
 
-Review: Check the calculated buy/sell amounts for each holding.
+4. Review: Check the calculated buy/sell amounts for each holding.
 
-Execute: Go to your selected DEX and confirm your trades!
+5. Execute: Go to your selected DEX and confirm your trades!
 
 ## 🛠 Tech Stack
 
-Avalanche C-Chain
+- Avalanche C-Chain
 
-SpruceID for Ethereum Authentication
+- SpruceID for Ethereum Authentication
 
-Frontend built in React and Typescript
+- Frontend built in React and Typescript
 
 
 

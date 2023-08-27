@@ -1,4 +1,4 @@
-# ⚡ Rebalancer
+<img width="490" alt="rebalancer" src="https://github.com/loicdrbx/avalanche-rebalancer/assets/91540026/27648f2a-df23-459a-a9c6-e2b3186d45a4">
   ## Your Portfolio Rebalancer Based On Avalanche
 
 ## 🚀 Overview

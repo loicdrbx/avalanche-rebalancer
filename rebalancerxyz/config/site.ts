@@ -22,7 +22,7 @@ export const siteConfig: SiteConfig = {
   name: 'Rebalancer',
   title: '',
   emoji: '⚖️',
-  description: 'Manage your Avalanche portfolio with ease',
+  description: 'Cheaper, faster, and trusted on Avalanche',
   previewImg: `${SITE_CANONICAL}/preview.png`,
   localeDefault: 'en',
   links: {

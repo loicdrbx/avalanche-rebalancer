@@ -13,18 +13,9 @@ export function Footer({ className, ...props }: HTMLAttributes<HTMLElement>) {
   return (
     <footer className={classes} {...props}>
       <h3>{siteConfig.title}</h3>
-      <a className="link my-2 text-xs" href="https://districtlabs.com/" rel="noreferrer" target={'_blank'}>
-        Built by District Labs
+      <a className="link my-2 text-xs" href="https://www.encode.club/university-hackathon" rel="noreferrer" target={'_blank'}>
+        Built for Encode Club Hackathon
       </a>
-      <div className="mt-2 flex items-center">
-        <LinkComponent href={`${siteConfig.links.github}`}>
-          <FaGithub />
-        </LinkComponent>
-        <div className="mx-2" />
-        <LinkComponent href={`${siteConfig.links.twitter}`}>
-          <FaTwitter />
-        </LinkComponent>
-      </div>
     </footer>
   )
 }

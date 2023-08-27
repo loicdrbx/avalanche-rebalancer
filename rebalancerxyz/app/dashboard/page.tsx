@@ -7,7 +7,9 @@ import { WalletBalance } from '@/components/blockchain/wallet-balance'
 import { WalletEnsName } from '@/components/blockchain/wallet-ens-name'
 import { IsWalletConnected } from '@/components/shared/is-wallet-connected'
 import { IsWalletDisconnected } from '@/components/shared/is-wallet-disconnected'
+import { useAccount, useBalance } from 'wagmi'
 import { FADE_DOWN_ANIMATION_VARIANTS } from '@/config/design'
+import { trimFormattedBalance } from '@/lib/utils'
 import useEthers from './useEthers';
 
 //imports for table view
@@ -21,24 +23,46 @@ import AllocationTable from './allocationTable'
 
 const sampleData = [
   {
-    asset: 'Stock A',
+    asset: 'AVAX',
+    amount: 10,
     currentAllocation: 40,
     targetAllocation: 50,
     delta: -10,
     buySellAmount: 1000,
   },
   {
-    asset: 'Stock B',
+    asset: 'ALOT',
+    amount: 10,
     currentAllocation: 30,
     targetAllocation: 25,
     delta: 5,
     buySellAmount: -500,
   },
-  // Add more sample data items as needed
+  {
+    asset: 'USDC',
+    amount: 10,
+    currentAllocation: 30,
+    targetAllocation: 25,
+    delta: 5,
+    buySellAmount: -500,
+  },
+  {
+    asset: 'WETH.e',
+    amount: 10,
+    currentAllocation: 30,
+    targetAllocation: 25,
+    delta: 5,
+    buySellAmount: -500,
+  }
 ];
 
 export default function PageDashboard() {
-  const { alotBalance, usdcBalance, wethBalance } = useEthers("0x57631Cf3266B84fa91e54e41516961d9DfE63100"); //TODO: Add your wallet address
+
+  const { address } = useAccount();
+  const { data: balance } = useBalance({ address })
+  const { alotBalance, usdcBalance, wethBalance } = useEthers(`${address}`);
+
+  console.log(trimFormattedBalance(balance?.formatted, 4));
 
   return (
     <motion.div

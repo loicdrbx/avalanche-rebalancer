@@ -35,10 +35,10 @@ export function Header({ className, ...props }: HTMLAttributes<HTMLElement>) {
         <div className="flex w-full justify-between p-4">
           <LinkComponent className="flex flex-1 items-center " href="/">
             <IsLightTheme>
-              <Image alt="Logo" height={32} src="/logo-dark.png" width={32} />
+              <Image alt="Logo" height={32} src="https://raw.githubusercontent.com/asulpizi-neu/pictures/cb2b0832c6d0669bdcb3afdd0db0161e18a6d71d/logo-dark.png" width={32} />
             </IsLightTheme>
             <IsDarkTheme>
-              <Image alt="Logo" height={32} src="/logo-white.png" width={32} />
+              <Image alt="Logo" height={32} src="https://raw.githubusercontent.com/asulpizi-neu/pictures/cb2b0832c6d0669bdcb3afdd0db0161e18a6d71d/logo-dark.png" width={32} />
             </IsDarkTheme>
           </LinkComponent>
           <div className="">
@@ -48,13 +48,7 @@ export function Header({ className, ...props }: HTMLAttributes<HTMLElement>) {
       </IsMobile>
       <IsDesktop>
         <LinkComponent className="flex items-center" href="/">
-          <IsLightTheme>
-            <Image alt="Logo" height={32} src="/logo-dark.png" width={32} />
-          </IsLightTheme>
-          <IsDarkTheme>
-            <Image alt="Logo" height={32} src="/logo-white.png" width={32} />
-          </IsDarkTheme>
-          <h1 className="text-gradient-sand ml-2 text-2xl font-bold">{siteConfig.name}</h1>
+          <Image alt="Logo" height={256} src="https://raw.githubusercontent.com/asulpizi-neu/pictures/cb2b0832c6d0669bdcb3afdd0db0161e18a6d71d/logo-white.png" width={256} />
         </LinkComponent>
         <div className="flex flex-1 justify-center lg:px-10">
           <NavigationMenuGeneral />
@@ -62,7 +56,7 @@ export function Header({ className, ...props }: HTMLAttributes<HTMLElement>) {
         <div className="flex items-center gap-4">
           <BranchButtonLoginOrAccount classNameButtonLogin="menu-item colormode" classNameButtonLogout="menu-item" />
           <LinkComponent className="btn btn-pill bg-gradient-button px-2 hover:scale-105 hover:shadow-lg" href="/dashboard">
-            Dashboard
+            Go to Portfolio
           </LinkComponent>
           <ThemeToggle />
         </div>

@@ -38,13 +38,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <IsDesktop>
             <div className="flex p-4 py-6">
               <LinkComponent className="flex items-center" href="/">
-                <IsLightTheme>
-                  <Image alt="Logo" height={32} src="/logo-dark.png" width={32} />
-                </IsLightTheme>
-                <IsDarkTheme>
-                  <Image alt="Logo" height={32} src="/logo-white.png" width={32} />
-                </IsDarkTheme>
-                <h1 className="text-gradient-sand ml-2 text-2xl font-bold">{siteConfig.name}</h1>
+                <Image alt="Logo" height={256} src="https://raw.githubusercontent.com/asulpizi-neu/pictures/cb2b0832c6d0669bdcb3afdd0db0161e18a6d71d/logo-white.png" width={256} />
               </LinkComponent>
             </div>
             <div className="flex-1 px-8 py-5">

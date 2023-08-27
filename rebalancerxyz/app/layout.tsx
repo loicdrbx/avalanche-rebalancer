@@ -19,7 +19,7 @@ export const metadata = {
   title: `${siteConfig.name} - ${siteConfig.description}`,
   description: siteConfig.description,
   icons: {
-    icon: '/favicon.ico',
+    icon: 'https://raw.githubusercontent.com/asulpizi-neu/pictures/main/favicon.png',
   },
   openGraph: {
     title: siteConfig.name,

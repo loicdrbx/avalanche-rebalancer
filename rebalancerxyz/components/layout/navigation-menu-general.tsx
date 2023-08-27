@@ -21,13 +21,17 @@ export function NavigationMenuGeneral() {
       <NavigationMenuList className="w-full">
         <NavigationMenuItem>
           <LinkComponent href="https://github.com/loicdrbx/avalanche-rebalancer">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>Documentation</NavigationMenuLink>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()} style={{ fontSize: '18px' }}>
+              Documentation
+            </NavigationMenuLink>
           </LinkComponent>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  )
+  );
 }
+
+
 
 interface ListItemProps extends HTMLAttributes<HTMLElement> {
   href: string

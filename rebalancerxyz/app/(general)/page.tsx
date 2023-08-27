@@ -29,7 +29,7 @@ export default function Home() {
                 },
               },
             }}>
-            <img alt="Turbo ETH" className="mx-auto mb-10 h-20 w-20" src="/logo-fill.png" />
+            <img alt="Turbo ETH" className="mx-auto mb-15 h-30 w-30" src="https://raw.githubusercontent.com/asulpizi-neu/pictures/main/favicon.png" />
             <motion.h1
               className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm dark:from-stone-100 dark:to-yellow-200 md:text-8xl md:leading-[6rem]"
               variants={FADE_DOWN_ANIMATION_VARIANTS}>

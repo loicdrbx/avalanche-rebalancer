@@ -9,13 +9,15 @@ declare global {
   }
   
 type Balances = {
-  alotBalance: string | null;
-  usdcBalance: string | null;
-  wethBalance: string | null;
+  alotBalance: number;
+  usdcBalance: number;
+  wethBalance: number;
+  alotBalanceUsd: number;
+  wethBalanceUsd: number;
 };
 
 const useEthers = (address: string): Balances => {
-  const [balances, setBalances] = useState<Balances>({ alotBalance: null, usdcBalance: null, wethBalance: null });
+  const [balances, setBalances] = useState<Balances>({ alotBalance: 0, usdcBalance: 0, wethBalance: 0, alotBalanceUsd: 0, wethBalanceUsd: 0 });
 
   useEffect(() => {
     let signer = null;
@@ -43,21 +45,25 @@ const useEthers = (address: string): Balances => {
         //Avalanche balances
         //USDC
         usdcContract = new ethers.Contract("0x5425890298aed601595a70AB815c96711a31Bc65", abi, provider);
-        const usdcBalance = await usdcContract.balanceOf(address);
+        const usdcBalance = await usdcContract.balanceOf(address) / 1000000;
 
         //ALOT
         alotContract = new ethers.Contract("0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6", abi, provider);
-        const alotBalance = await alotContract.balanceOf(address)
+        const alotBalance = await alotContract.balanceOf(address) / 1000000000000000000n;
+        const alotBalanceUsd = Number(alotBalance) * 0.39;
         
         //WETH.e
         wethContract = new ethers.Contract("0xc42E4b495020b87a2f2F7b4fb817F79fcF7043E2", abi, provider);
-        const wethBalance = await wethContract.balanceOf(address);
+        const wethBalance = await wethContract.balanceOf(address) / 1000000000000000000n;
+        const wethBalanceUsd = Number(wethBalance) * 1653.77;
 
         // Convert to strings right away
         setBalances({ 
-          alotBalance: alotBalance.toString(), 
-          usdcBalance: usdcBalance.toString(),
-          wethBalance: wethBalance.toString()
+          alotBalance: Number(alotBalance), 
+          usdcBalance: usdcBalance,
+          wethBalance: Number(wethBalance),
+          wethBalanceUsd: wethBalanceUsd,
+          alotBalanceUsd: alotBalanceUsd
         });
       }
     };

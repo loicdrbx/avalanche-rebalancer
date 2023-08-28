@@ -60,10 +60,34 @@ export default function PageDashboard() {
 
   const { address } = useAccount();
   const { data: balance } = useBalance({ address })
-  const { alotBalance, usdcBalance, wethBalance } = useEthers(`${address}`);
+  const avaxBalance = trimFormattedBalance(balance?.formatted, 4);
+  const avaxBalanceUsd = Number(avaxBalance) * 10.19;
+  let { alotBalance, usdcBalance, wethBalance, alotBalanceUsd, wethBalanceUsd } = useEthers(`${address}`);
 
-  console.log(trimFormattedBalance(balance?.formatted, 4));
+  const nav = avaxBalanceUsd + wethBalanceUsd + alotBalanceUsd + usdcBalance;
+  
+  const avaxCurrent = Math.round(avaxBalanceUsd / nav * 100); // 30%
+  const alotCurrent = Math.round(alotBalanceUsd / nav * 100);        // 10%
+  const usdcCurrent = Math.round(usdcBalance / nav * 100);          // 40%
+  const wethCurrent = Math.round(wethBalanceUsd / nav * 100);       // 20%
 
+  //User inputs target %. Ensure user inputs percentages rounded to full number
+  const avaxTarget = 20;
+  const alotTarget = 10;
+  const usdcTarget = 40;
+  const wethTarget = 30;
+
+  const avaxDiff = (avaxTarget - avaxCurrent); 
+  const alotDiff = (alotTarget - alotCurrent);
+  const usdcDiff = (usdcTarget - usdcCurrent);
+  const wethDiff = (wethTarget - wethCurrent);
+
+  const avaxAmount = avaxDiff * nav; 
+  const alotAmount = alotDiff * nav;
+  const usdcAmount = usdcDiff * nav;
+  const wethAmount = wethDiff * nav;
+
+  
   return (
     <motion.div
       animate="show"

@@ -1,3 +1,4 @@
+import { ucs2 } from 'punycode'
 import React, { ChangeEvent, useState } from 'react'
 
 import Button from 'react-bootstrap/Button'
@@ -19,13 +20,29 @@ interface AllocationTableProps {
 }
 
 const AllocationTable: React.FC<AllocationTableProps> = ({ data }) => {
-  const [selectedTargetAllocations, setSelectedTargetAllocations] = useState<Record<string, number>>({})
 
-  const handleTargetAllocationChange = (asset: string, value: number | string) => {
-    setSelectedTargetAllocations((prevAllocations) => ({
-      ...prevAllocations,
-      [asset]: typeof value === 'string' ? parseFloat(value) : value,
-    }))
+  const [selectedTargetAllocations, setSelectedTargetAllocations] = useState<AssetData[]>(data)
+
+  const handleTargetAllocationChange = (index: number, value: number) => {
+    const updatedData = [...data];
+    updatedData[index].targetAllocation = value;
+
+    var [avax, alot, usdc, weth] = [updatedData[0], updatedData[1], updatedData[2], updatedData[3]];
+
+    const nav = avax.amount + alot.amount + usdc.amount + weth.amount;
+
+    avax.delta = avax.targetAllocation - avax.currentAllocation;
+    alot.delta = alot.targetAllocation - alot.currentAllocation;
+    alot.delta = usdc.targetAllocation - usdc.currentAllocation;
+    weth.delta = weth.targetAllocation - weth.currentAllocation;
+  
+    avax.buySellAmount = +((avax.delta  * nav) / 10.19 * 0.01).toFixed(2); 
+    alot.buySellAmount = +((alot.delta * nav) / 0.39 * 0.01).toFixed(2);
+    usdc.buySellAmount = +((alot.delta * nav) / 1 * 0.01).toFixed(2);
+    weth.buySellAmount = +((weth.delta * nav) /  1653.77 * 0.01).toFixed(4);
+
+
+    setSelectedTargetAllocations(updatedData);
   }
 
   return (
@@ -54,8 +71,8 @@ const AllocationTable: React.FC<AllocationTableProps> = ({ data }) => {
                 value={item.targetAllocation || 0}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleTargetAllocationChange(
-                    item.asset,
-                    e.target.value
+                    index,
+                    Number(e.target.value)
                   )
                 }
               />

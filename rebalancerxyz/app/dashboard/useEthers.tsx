@@ -45,7 +45,7 @@ const useEthers = (address: string): Balances => {
         //Avalanche balances
         //USDC
         usdcContract = new ethers.Contract("0x5425890298aed601595a70AB815c96711a31Bc65", abi, provider);
-        const usdcBalance = await usdcContract.balanceOf(address) / 1000000;
+        const usdcBalance = await usdcContract.balanceOf(address) / 1000000n;
 
         //ALOT
         alotContract = new ethers.Contract("0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6", abi, provider);
@@ -60,7 +60,7 @@ const useEthers = (address: string): Balances => {
         // Convert to strings right away
         setBalances({ 
           alotBalance: Number(alotBalance), 
-          usdcBalance: usdcBalance,
+          usdcBalance: Number(usdcBalance),
           wethBalance: Number(wethBalance),
           wethBalanceUsd: wethBalanceUsd,
           alotBalanceUsd: alotBalanceUsd

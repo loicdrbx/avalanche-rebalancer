@@ -51,7 +51,7 @@ const AllocationTable: React.FC<AllocationTableProps> = ({ data }) => {
                 type="number"
                 min={0}
                 max={100}
-                value={selectedTargetAllocations[item.asset] || ''}
+                value={selectedTargetAllocations[item.asset] || 0}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleTargetAllocationChange(
                     item.asset,

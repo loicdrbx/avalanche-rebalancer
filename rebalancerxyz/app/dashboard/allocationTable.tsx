@@ -36,7 +36,7 @@ const AllocationTable: React.FC<AllocationTableProps> = ({ data }) => {
           <th>Amount</th>
           <th>Current Allocation</th>
           <th>Target Allocation</th>
-          <th>Delta</th>
+          <th>Delta (%)</th>
           <th>Buy/Sell Amount</th>
         </tr>
       </thead>
@@ -51,7 +51,7 @@ const AllocationTable: React.FC<AllocationTableProps> = ({ data }) => {
                 type="number"
                 min={0}
                 max={100}
-                value={selectedTargetAllocations[item.asset] || 0}
+                value={item.targetAllocation || 0}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleTargetAllocationChange(
                     item.asset,

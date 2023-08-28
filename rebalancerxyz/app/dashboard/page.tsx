@@ -20,53 +20,19 @@ import { trimFormattedBalance } from '@/lib/utils'
 import AllocationTable from './allocationTable'
 import useEthers from './useEthers'
 
-//imports for table view
-
-const sampleData = [
-  {
-    asset: 'AVAX',
-    amount: 10,
-    currentAllocation: 40,
-    targetAllocation: 50,
-    delta: -10,
-    buySellAmount: 1000,
-    link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
-  },
-  {
-    asset: 'ALOT',
-    amount: 10,
-    currentAllocation: 30,
-    targetAllocation: 25,
-    delta: 5,
-    buySellAmount: -500,
-    link: `https://app.dexalot-test.com/trade/ALOT-USDC`,
-  },
-  {
-    asset: 'USDC',
-    amount: 10,
-    currentAllocation: 30,
-    targetAllocation: 25,
-    delta: 5,
-    buySellAmount: -500,
-    link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
-  },
-  {
-    asset: 'WETH.e',
-    amount: 10,
-    currentAllocation: 30,
-    targetAllocation: 25,
-    delta: 5,
-    buySellAmount: -500,
-    link: `https://app.dexalot-test.com/trade/WETH.e-USDC`,
-  },
-]
-
 export default function PageDashboard() {
   const { address } = useAccount()
   const { data: balance } = useBalance({ address })
-  const avaxBalance = trimFormattedBalance(balance?.formatted, 4);
-  const avaxBalanceUsd = Number(avaxBalance) * 10.19;
-  let { alotBalance, usdcBalance, wethBalance, alotBalanceUsd, wethBalanceUsd } = useEthers(`${address}`);
+  const { data: rawAlotBalance } = useBalance({ address: address, token: "0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6" })
+  const { data: rawUsdcBalance } = useBalance({ address: address, token: "0x5425890298aed601595a70AB815c96711a31Bc65" })
+  const { data: rawWethBalance } = useBalance({ address: address, token: "0xc42E4b495020b87a2f2F7b4fb817F79fcF7043E2" })
+  const avaxBalance = Number(trimFormattedBalance(balance?.formatted, 4));
+  const alotBalance = Number(trimFormattedBalance(rawAlotBalance?.formatted, 4));
+  const usdcBalance = Number(trimFormattedBalance(rawUsdcBalance?.formatted, 4));
+  const wethBalance = Number(trimFormattedBalance(rawWethBalance?.formatted, 4));
+  const avaxBalanceUsd = avaxBalance * 10.19;
+  const alotBalanceUsd = alotBalance * 0.39;
+  const wethBalanceUsd = wethBalance * 1653.77;
 
   const nav = avaxBalanceUsd + wethBalanceUsd + alotBalanceUsd + usdcBalance;
   
@@ -86,10 +52,51 @@ export default function PageDashboard() {
   const usdcDiff = (usdcTarget - usdcCurrent);
   const wethDiff = (wethTarget - wethCurrent);
 
-  const avaxAmount = avaxDiff * nav; 
-  const alotAmount = alotDiff * nav;
-  const usdcAmount = usdcDiff * nav;
-  const wethAmount = wethDiff * nav;
+  const avaxAmount = +((avaxDiff * nav) / 10.19 * 0.01).toFixed(2); 
+  const alotAmount = +((alotDiff * nav) / 0.39 * 0.01).toFixed(2);
+  const usdcAmount = +((usdcDiff * nav) / 1 * 0.01).toFixed(2);
+  const wethAmount = +((wethDiff * nav) /  1653.77 * 0.01).toFixed(4);
+
+  //imports for table view
+
+  const sampleData = [
+    {
+      asset: 'AVAX',
+      amount: avaxBalance,
+      currentAllocation: avaxCurrent,
+      targetAllocation: avaxTarget,
+      delta: avaxDiff,
+      buySellAmount: avaxAmount,
+      link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
+    },
+    {
+      asset: 'ALOT',
+      amount: alotBalance,
+      currentAllocation: alotCurrent,
+      targetAllocation: alotTarget,
+      delta: alotDiff,
+      buySellAmount: alotAmount,
+      link: `https://app.dexalot-test.com/trade/ALOT-USDC`,
+    },
+    {
+      asset: 'USDC',
+      amount: usdcBalance,
+      currentAllocation: usdcCurrent,
+      targetAllocation: usdcTarget,
+      delta: usdcDiff,
+      buySellAmount: usdcAmount,
+      link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
+    },
+    {
+      asset: 'WETH.e',
+      amount: wethBalance,
+      currentAllocation: wethCurrent,
+      targetAllocation: wethTarget,
+      delta: wethDiff,
+      buySellAmount: wethAmount,
+      link: `https://app.dexalot-test.com/trade/WETH.e-USDC`,
+    },
+  ]
 
   
   return (

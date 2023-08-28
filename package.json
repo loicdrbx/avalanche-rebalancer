@@ -20,17 +20,7 @@
     "run-ci": "concurrently -c \"auto\" -p \"name\" -n \"format,lint\" \"pnpm format\"  \"pnpm lint\"  ",
     "prepare": "husky install ; prisma generate ; wagmi generate"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "./src": [
-      "lint",
-      "prettier"
-    ]
-  },
+  "husky": {},
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=18.0.0"
@@ -111,6 +101,7 @@
     "react-responsive": "^9.0.2",
     "react-table": "^7.8.0",
     "react-wrap-balancer": "^0.3.0",
+    "sharp": "^0.32.5",
     "siwe": "1.1.6",
     "tailwind-merge": "^1.8.1",
     "tailwindcss": "^3.2.4",
@@ -121,8 +112,6 @@
   },
   "devDependencies": {
     "@babel/core": "7.18.5",
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
     "@graphprotocol/client-cli": "^3.0.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
@@ -154,8 +143,6 @@
     "eslint-plugin-tailwindcss": "^3.5.0",
     "eslint-plugin-testing-library": "^5.5.1",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.1.0",
     "postcss": "^8.4.19",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.0",

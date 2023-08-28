@@ -1,25 +1,26 @@
 'use client'
 
+import React from 'react'
+
 import { motion } from 'framer-motion'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Table from 'react-bootstrap/Table'
+import { useAccount, useBalance } from 'wagmi'
 
 import { WalletAddress } from '@/components/blockchain/wallet-address'
 import { WalletBalance } from '@/components/blockchain/wallet-balance'
 import { WalletEnsName } from '@/components/blockchain/wallet-ens-name'
 import { IsWalletConnected } from '@/components/shared/is-wallet-connected'
 import { IsWalletDisconnected } from '@/components/shared/is-wallet-disconnected'
-import { useAccount, useBalance } from 'wagmi'
 import { FADE_DOWN_ANIMATION_VARIANTS } from '@/config/design'
 import { trimFormattedBalance } from '@/lib/utils'
-import useEthers from './useEthers';
+
+import AllocationTable from './allocationTable'
+import useEthers from './useEthers'
 
 //imports for table view
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
-import AllocationTable from './allocationTable'
-
 
 const sampleData = [
   {
@@ -29,6 +30,7 @@ const sampleData = [
     targetAllocation: 50,
     delta: -10,
     buySellAmount: 1000,
+    link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
   },
   {
     asset: 'ALOT',
@@ -37,6 +39,7 @@ const sampleData = [
     targetAllocation: 25,
     delta: 5,
     buySellAmount: -500,
+    link: `https://app.dexalot-test.com/trade/ALOT-USDC`,
   },
   {
     asset: 'USDC',
@@ -45,6 +48,7 @@ const sampleData = [
     targetAllocation: 25,
     delta: 5,
     buySellAmount: -500,
+    link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
   },
   {
     asset: 'WETH.e',
@@ -53,12 +57,12 @@ const sampleData = [
     targetAllocation: 25,
     delta: 5,
     buySellAmount: -500,
-  }
-];
+    link: `https://app.dexalot-test.com/trade/WETH.e-USDC`,
+  },
+]
 
 export default function PageDashboard() {
-
-  const { address } = useAccount();
+  const { address } = useAccount()
   const { data: balance } = useBalance({ address })
   const avaxBalance = trimFormattedBalance(balance?.formatted, 4);
   const avaxBalanceUsd = Number(avaxBalance) * 10.19;
@@ -101,20 +105,18 @@ export default function PageDashboard() {
           <div className="text-center">
             <h3 className="font-primary text-2xl font-bold lg:text-6xl">
               <span className="text-gradient-secondary">
-                hi 👋 <WalletEnsName />
+                Your Portfolio <WalletEnsName />
               </span>
             </h3>
-            <span className="font-light">  
+            <span className="font-light">
               <div className="mt-4">
                 <span className="font-primary text-3xl font-light">
+                  <AllocationTable data={sampleData} />
 
-                <h1>Allocation Table</h1>
-                <AllocationTable data={sampleData} />
-
-                <Container fluid>
+                  <Container fluid>
                     <Row className="justify-content-center mt-5">
                       <Col md={8}>
-                        <Table bordered hover className="rounded">
+                        <Table bordered hover className="Table rounded">
                           <thead>
                             <tr>
                               <th>Token</th>
@@ -128,28 +130,60 @@ export default function PageDashboard() {
                               <td>
                                 <WalletBalance className="" decimals={7} />
                               </td>
-                              <td><a href="https://app.dexalot-test.com/trade/AVAX-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">AVAX Link</a></td>
+                              <td>
+                                <a
+                                  className="font-small rounded bg-gray-200 py-0.5 px-2 text-gray-700 hover:bg-gray-300"
+                                  href="https://app.dexalot-test.com/trade/AVAX-USDC"
+                                  rel="noopener noreferrer"
+                                  target="_blank">
+                                  AVAX Link
+                                </a>
+                              </td>
                             </tr>
                             {alotBalance && (
                               <tr>
                                 <td>ALOT</td>
                                 <td>{alotBalance}</td>
-                                <td><a href="https://app.dexalot-test.com/trade/ALOT-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">ALOT Link</a></td>
+                                <td>
+                                  <a
+                                    className="font-small rounded bg-gray-200 py-0.5 px-2 text-gray-700 hover:bg-gray-300"
+                                    href="https://app.dexalot-test.com/trade/ALOT-USDC"
+                                    rel="noopener noreferrer"
+                                    target="_blank">
+                                    ALOT Link
+                                  </a>
+                                </td>
                               </tr>
                             )}
                             {usdcBalance && (
                               <tr>
                                 <td>USDC</td>
                                 <td>{usdcBalance}</td>
-                                <td><a href="https://app.dexalot-test.com/trade/AVAX-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">USDC Link</a></td>
+                                <td>
+                                  <a
+                                    className="font-small rounded bg-gray-200 py-0.5 px-2 text-gray-700 hover:bg-gray-300"
+                                    href="https://app.dexalot-test.com/trade/AVAX-USDC"
+                                    rel="noopener noreferrer"
+                                    target="_blank">
+                                    USDC Link
+                                  </a>
+                                </td>
                               </tr>
-                                        // There is no USDC-USDC pair, that would be silly. So I chose next best pair of AVAX-USDC.
+                              // There is no USDC-USDC pair, that would be silly. So I chose next best pair of AVAX-USDC.
                             )}
                             {wethBalance && (
                               <tr>
                                 <td>WETH.e</td>
                                 <td>{wethBalance}</td>
-                                <td><a href="https://app.dexalot-test.com/trade/WETH.e-USDC" target="_blank" rel="noopener noreferrer" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-small py-0.5 px-2 rounded">WETH.e Link</a></td>
+                                <td>
+                                  <a
+                                    className="font-small rounded bg-gray-200 py-0.5 px-2 text-gray-700 hover:bg-gray-300"
+                                    href="https://app.dexalot-test.com/trade/WETH.e-USDC"
+                                    rel="noopener noreferrer"
+                                    target="_blank">
+                                    WETH.e Link
+                                  </a>
+                                </td>
                               </tr>
                             )}
                           </tbody>

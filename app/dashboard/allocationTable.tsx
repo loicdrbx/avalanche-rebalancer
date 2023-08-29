@@ -33,13 +33,13 @@ const AllocationTable: React.FC<AllocationTableProps> = ({ data }) => {
 
     avax.delta = avax.targetAllocation - avax.currentAllocation;
     alot.delta = alot.targetAllocation - alot.currentAllocation;
-    alot.delta = usdc.targetAllocation - usdc.currentAllocation;
+    usdc.delta = usdc.targetAllocation - usdc.currentAllocation;
     weth.delta = weth.targetAllocation - weth.currentAllocation;
   
-    avax.buySellAmount = +((avax.delta  * nav) / 10.19 * 0.01).toFixed(2); 
-    alot.buySellAmount = +((alot.delta * nav) / 0.39 * 0.01).toFixed(2);
-    usdc.buySellAmount = +((alot.delta * nav) / 1 * 0.01).toFixed(2);
-    weth.buySellAmount = +((weth.delta * nav) /  1653.77 * 0.01).toFixed(4);
+    avax.buySellAmount = avax.amount - +((nav * (avax.targetAllocation * 0.01)) / 10.19).toFixed(2);
+    alot.buySellAmount = alot.amount - +((nav * (alot.targetAllocation * 0.01)) / 0.39).toFixed(2);
+    usdc.buySellAmount = usdc.amount - +((nav * (usdc.targetAllocation * 0.01)) / 1).toFixed(2);
+    weth.buySellAmount = weth.amount - +((nav * (weth.targetAllocation * 0.01)) / 1653.77).toFixed(4);
 
 
     setSelectedTargetAllocations(updatedData);

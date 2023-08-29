@@ -22,7 +22,7 @@ const goerli = {
 }
 
 export const ETH_CHAINS_TEST = [goerli, avalancheFuji]
-export const ETH_CHAINS_PROD = [mainnet, arbitrum, polygon, avalanche]
+export const ETH_CHAINS_PROD = [avalancheFuji]
 export const ETH_CHAINS_DEV =
   env.NEXT_PUBLIC_PROD_NETWORKS_DEV === 'true'
     ? [...ETH_CHAINS_PROD, ...ETH_CHAINS_TEST]

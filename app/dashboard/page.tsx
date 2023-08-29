@@ -18,7 +18,6 @@ import { FADE_DOWN_ANIMATION_VARIANTS } from '@/config/design'
 import { trimFormattedBalance } from '@/lib/utils'
 
 import AllocationTable from './allocationTable'
-import useEthers from './useEthers'
 
 export default function PageDashboard() {
   const { address } = useAccount()
@@ -30,11 +29,11 @@ export default function PageDashboard() {
   const alotBalance = Number(trimFormattedBalance(rawAlotBalance?.formatted, 4));
   const usdcBalance = Number(trimFormattedBalance(rawUsdcBalance?.formatted, 4));
   const wethBalance = Number(trimFormattedBalance(rawWethBalance?.formatted, 4));
-  const avaxBalanceUsd = avaxBalance * 10.19;
-  const alotBalanceUsd = alotBalance * 0.39;
-  const wethBalanceUsd = wethBalance * 1653.77;
-
-  const nav = avaxBalanceUsd + wethBalanceUsd + alotBalanceUsd + usdcBalance;
+  const avaxBalanceUsd = avaxBalance * 10.19; //40.49
+  const alotBalanceUsd = alotBalance * 0.39; //1.56
+  const wethBalanceUsd = wethBalance * 1653.77; //3.97
+                                                //usd balance: 2
+  const nav = avaxBalanceUsd + wethBalanceUsd + alotBalanceUsd + usdcBalance; //48.02
   
   const avaxCurrent = Math.round(avaxBalanceUsd / nav * 100); // 30%
   const alotCurrent = Math.round(alotBalanceUsd / nav * 100);        // 10%
@@ -47,15 +46,18 @@ export default function PageDashboard() {
   const usdcTarget = 40;
   const wethTarget = 30;
 
-  const avaxDiff = (avaxTarget - avaxCurrent); 
-  const alotDiff = (alotTarget - alotCurrent);
-  const usdcDiff = (usdcTarget - usdcCurrent);
-  const wethDiff = (wethTarget - wethCurrent);
+  const avaxDiff = avaxTarget - (avaxBalanceUsd / nav * 100);  //20 - (40.49 / 48.02*100)  = 19.99
+  const alotDiff = alotTarget - (alotBalanceUsd / nav * 100);
+  const usdcDiff = usdcTarget - (usdcBalance / nav * 100);
+  const wethDiff = wethTarget - (wethBalanceUsd / nav * 100);
 
-  const avaxAmount = +((avaxDiff * nav) / 10.19 * 0.01).toFixed(2); 
-  const alotAmount = +((alotDiff * nav) / 0.39 * 0.01).toFixed(2);
-  const usdcAmount = +((usdcDiff * nav) / 1 * 0.01).toFixed(2);
-  const wethAmount = +((wethDiff * nav) /  1653.77 * 0.01).toFixed(4);
+
+  const avaxAmount = avaxBalance - +((nav * (avaxTarget * 0.01)) / 10.19).toFixed(2);
+  const alotAmount = alotBalance - +((nav * (alotTarget * 0.01)) / 0.39).toFixed(2);
+  const usdcAmount = usdcBalance - +((nav * (usdcTarget * 0.01)) / 1).toFixed(2);
+  const wethAmount = wethBalance - +((nav * (wethTarget * 0.01)) / 1653.77).toFixed(4);
+
+
 
   //imports for table view
 

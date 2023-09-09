@@ -121,8 +121,7 @@ export default function PageDashboard() {
     },
   ]
 
-  const [selectedTargetAllocations, setSelectedTargetAllocations] =
-    useState(data)
+  const [assetData, setAssetData] = useState(data)
 
   const handleTargetAllocationChange = (index: number, value: number) => {
     const updatedData = [...data]
@@ -137,7 +136,7 @@ export default function PageDashboard() {
 
     avax.delta = avax.targetAllocation - avax.currentAllocation
     alot.delta = alot.targetAllocation - alot.currentAllocation
-    alot.delta = usdc.targetAllocation - usdc.currentAllocation
+    usdc.delta = usdc.targetAllocation - usdc.currentAllocation
     weth.delta = weth.targetAllocation - weth.currentAllocation
 
     avax.buySellAmount = +(((avax.delta * nav) / 9.905) * 0.01).toFixed(2)
@@ -145,7 +144,9 @@ export default function PageDashboard() {
     usdc.buySellAmount = +(((usdc.delta * nav) / 1) * 0.01).toFixed(2)
     weth.buySellAmount = +(((weth.delta * nav) / 1628.2) * 0.01).toFixed(4)
 
-    setSelectedTargetAllocations(updatedData)
+    data = updatedData
+
+    setAssetData(updatedData)
   }
 
   return (
@@ -173,19 +174,19 @@ export default function PageDashboard() {
                       <tr>
                         <th>Asset</th>
                         <th>Amount (Asset)</th>
-                        {/* <th>Value (USD)</th> */}
+                        <th>Value (USD)</th>
                         <th>Current Allocation (%)</th>
                         <th>Target Allocation (%)</th>
                         <th>Delta (%)</th>
-                        <th>Action</th>
+                        <th>Action (Asset)</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {data.map((item, index) => (
+                      {assetData.map((item, index) => (
                         <tr key={index}>
                           <td>{item.asset}</td>
                           <td>{item.amount}</td>
-                          {/* <td>{item.value}</td> */}
+                          <td>{item.value}</td>
                           <td>{item.currentAllocation}%</td>
                           <td>
                             <Form.Control

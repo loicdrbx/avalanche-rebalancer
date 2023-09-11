@@ -46,16 +46,16 @@ export default function PageDashboard() {
   const usdcTarget = 40;
   const wethTarget = 30;
 
-  const avaxDiff = avaxTarget - (avaxBalanceUsd / nav * 100);  //20 - (40.49 / 48.02*100)  = 19.99
-  const alotDiff = alotTarget - (alotBalanceUsd / nav * 100);
-  const usdcDiff = usdcTarget - (usdcBalance / nav * 100);
-  const wethDiff = wethTarget - (wethBalanceUsd / nav * 100);
+  const avaxDiff = avaxTarget - Math.round(avaxBalanceUsd / nav * 100);  //20 - (40.49 / 48.02*100)  = 19.99
+  const alotDiff = alotTarget - Math.round(alotBalanceUsd / nav * 100);
+  const usdcDiff = usdcTarget - Math.round(usdcBalance / nav * 100);
+  const wethDiff = wethTarget - Math.round(wethBalanceUsd / nav * 100);
 
 
-  const avaxAmount = avaxBalance - +((nav * (avaxTarget * 0.01)) / 10.19).toFixed(2);
-  const alotAmount = alotBalance - +((nav * (alotTarget * 0.01)) / 0.39).toFixed(2);
-  const usdcAmount = usdcBalance - +((nav * (usdcTarget * 0.01)) / 1).toFixed(2);
-  const wethAmount = wethBalance - +((nav * (wethTarget * 0.01)) / 1653.77).toFixed(4);
+  const avaxAmount = +((nav * (avaxTarget * 0.01)) / 10.19).toFixed(2) - avaxBalance;
+  const alotAmount = +((nav * (alotTarget * 0.01)) / 0.39).toFixed(2) - alotBalance;
+  const usdcAmount = +((nav * (usdcTarget * 0.01)) / 1).toFixed(2) - usdcBalance;
+  const wethAmount = +((nav * (wethTarget * 0.01)) / 1653.77).toFixed(4) - wethBalance;
 
 
 
@@ -113,8 +113,8 @@ export default function PageDashboard() {
         <div className="flex-center col-span-12 flex flex-col lg:col-span-9">
           <div className="text-center">
             <h3 className="font-primary text-2xl font-bold lg:text-6xl">
-              <span className="text-gradient-secondary">
-                Your Portfolio <WalletEnsName />
+              <span className="text-gradient-sand">
+                Your Portfolio
               </span>
             </h3>
             <span className="font-light">

@@ -1,16 +1,13 @@
-"use client"
+'use client'
 
-import React, { ChangeEvent, useState } from "react"
+import React from 'react'
 
-import { motion } from "framer-motion"
-import { useAccount, useBalance } from "wagmi"
-import { WalletAddress } from "@/components/blockchain/wallet-address"
-import { WalletEnsName } from "@/components/blockchain/wallet-ens-name"
-import { IsWalletConnected } from "@/components/shared/is-wallet-connected"
-import { IsWalletDisconnected } from "@/components/shared/is-wallet-disconnected"
-import { FADE_DOWN_ANIMATION_VARIANTS } from "@/config/design"
-import { trimFormattedBalance } from "@/lib/utils"
-
+import { motion } from 'framer-motion'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Table from 'react-bootstrap/Table'
+import { useAccount, useBalance } from 'wagmi'
 
 import { WalletAddress } from '@/components/blockchain/wallet-address'
 import { WalletBalance } from '@/components/blockchain/wallet-balance'
@@ -22,11 +19,8 @@ import { trimFormattedBalance } from '@/lib/utils'
 
 import AllocationTable from './allocationTable'
 
-
 export default function PageDashboard() {
-  // Get wallet address
   const { address } = useAccount()
-
   const { data: balance } = useBalance({ address })
   const { data: rawAlotBalance } = useBalance({ address: address, token: "0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6" })
   const { data: rawUsdcBalance } = useBalance({ address: address, token: "0x5425890298aed601595a70AB815c96711a31Bc65" })
@@ -67,77 +61,46 @@ export default function PageDashboard() {
 
   //imports for table view
 
-  let data = [
+  const sampleData = [
     {
-      asset: "AVAX",
-      amount: avaxAmount,
-      value: Number(avaxValue.toFixed(2)),
-      currentAllocation: avaxCurrentAlloc,
-      targetAllocation: avaxTargetAlloc,
-      delta: avaxDelta,
-      buySellAmount: avaxReaAlloc,
+      asset: 'AVAX',
+      amount: avaxBalance,
+      currentAllocation: avaxCurrent,
+      targetAllocation: avaxTarget,
+      delta: avaxDiff,
+      buySellAmount: avaxAmount,
       link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
     },
     {
-      asset: "ALOT",
-      amount: alotAmount,
-      value: Number(alotValue.toFixed(2)),
-      currentAllocation: alotCurrentAlloc,
-      targetAllocation: alotTargetAlloc,
-      delta: alotDelta,
-      buySellAmount: alotReaAlloc,
+      asset: 'ALOT',
+      amount: alotBalance,
+      currentAllocation: alotCurrent,
+      targetAllocation: alotTarget,
+      delta: alotDiff,
+      buySellAmount: alotAmount,
       link: `https://app.dexalot-test.com/trade/ALOT-USDC`,
     },
     {
-      asset: "USDC",
-      amount: usdcAmount,
-      value: usdcValue.toFixed(2),
-      currentAllocation: usdcCurrentAlloc,
-      targetAllocation: usdcTargetAlloc,
-      delta: usdcDelta,
-      buySellAmount: usdcReaAlloc,
+      asset: 'USDC',
+      amount: usdcBalance,
+      currentAllocation: usdcCurrent,
+      targetAllocation: usdcTarget,
+      delta: usdcDiff,
+      buySellAmount: usdcAmount,
       link: `https://app.dexalot-test.com/trade/AVAX-USDC`,
     },
     {
-      asset: "WETH.e",
-      amount: wethAmount,
-      value: Number(wethValue.toFixed(2)),
-      currentAllocation: wethCurrentAlloc,
-      targetAllocation: wethTargetAlloc,
-      delta: wethDelta,
-      buySellAmount: wethReaAlloc,
+      asset: 'WETH.e',
+      amount: wethBalance,
+      currentAllocation: wethCurrent,
+      targetAllocation: wethTarget,
+      delta: wethDiff,
+      buySellAmount: wethAmount,
       link: `https://app.dexalot-test.com/trade/WETH.e-USDC`,
     },
   ]
 
-  const [assetData, setAssetData] = useState(data)
-
-  const handleTargetAllocationChange = (index: number, value: number) => {
-    const updatedData = [...data]
-    updatedData[index].targetAllocation = value
-
-    var [avax, alot, usdc, weth] = [
-      updatedData[0],
-      updatedData[1],
-      updatedData[2],
-      updatedData[3],
-    ]
-
-    avax.delta = avax.targetAllocation - avax.currentAllocation
-    alot.delta = alot.targetAllocation - alot.currentAllocation
-    usdc.delta = usdc.targetAllocation - usdc.currentAllocation
-    weth.delta = weth.targetAllocation - weth.currentAllocation
-
-    avax.buySellAmount = +(((avax.delta * nav) / 9.905) * 0.01).toFixed(2)
-    alot.buySellAmount = +(((alot.delta * nav) / 0.3225) * 0.01).toFixed(2)
-    usdc.buySellAmount = +(((usdc.delta * nav) / 1) * 0.01).toFixed(2)
-    weth.buySellAmount = +(((weth.delta * nav) / 1628.2) * 0.01).toFixed(4)
-
-    data = updatedData
-
-    setAssetData(updatedData)
-  }
-
+  
   return (
     <motion.div
       animate="show"
@@ -145,8 +108,7 @@ export default function PageDashboard() {
       initial="hidden"
       variants={FADE_DOWN_ANIMATION_VARIANTS}
       viewport={{ once: true }}
-      whileInView="show"
-    >
+      whileInView="show">
       <IsWalletConnected>
         <div className="flex-center col-span-12 flex flex-col lg:col-span-9">
           <div className="text-center">
@@ -158,68 +120,15 @@ export default function PageDashboard() {
             <span className="font-light">
               <div className="mt-4">
                 <span className="font-primary text-3xl font-light">
-                  <Table bordered hover className="Table rounded">
-                    <thead>
-                      <tr>
-                        <th>Asset</th>
-                        <th>Amount (Asset)</th>
-                        <th>Value (USD)</th>
-                        <th>Current Allocation (%)</th>
-                        <th>Target Allocation (%)</th>
-                        <th>Delta (%)</th>
-                        <th>Action (Asset)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {assetData.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.asset}</td>
-                          <td>{item.amount}</td>
-                          <td>{item.value}</td>
-                          <td>{item.currentAllocation}%</td>
-                          <td>
-                            <Form.Control
-                              type="number"
-                              min={0}
-                              max={100}
-                              value={item.targetAllocation}
-                              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                handleTargetAllocationChange(
-                                  index,
-                                  Number(e.target.value)
-                                )
-                              }
-                            />
-                            %
-                          </td>
-                          <td>{item.delta}</td>
-                          <td>{`${
-                            Math.sign(item.buySellAmount) >= 0 ? "Buy" : "Sell"
-                          } ${Math.abs(item.buySellAmount)}`}</td>
-                          <td>
-                            <a
-                              href={item.link}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <Button variant="primary">Rebalance</Button>
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                  <AllocationTable data={sampleData} />
                 </span>
-                <p>Net Asset Value (USD): {nav.toFixed(2)} </p>
               </div>
             </span>
           </div>
         </div>
       </IsWalletConnected>
       <IsWalletDisconnected>
-        <h3 className="text-lg font-normal">
-          Connect Wallet to view your personalized dashboard.
-        </h3>
+        <h3 className="text-lg font-normal">Connect Wallet to view your personalized dashboard.</h3>
       </IsWalletDisconnected>
     </motion.div>
   )

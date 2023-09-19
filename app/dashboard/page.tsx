@@ -11,70 +11,59 @@ import { IsWalletDisconnected } from "@/components/shared/is-wallet-disconnected
 import { FADE_DOWN_ANIMATION_VARIANTS } from "@/config/design"
 import { trimFormattedBalance } from "@/lib/utils"
 
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import Table from "react-bootstrap/Table"
+
+import { WalletAddress } from '@/components/blockchain/wallet-address'
+import { WalletBalance } from '@/components/blockchain/wallet-balance'
+import { WalletEnsName } from '@/components/blockchain/wallet-ens-name'
+import { IsWalletConnected } from '@/components/shared/is-wallet-connected'
+import { IsWalletDisconnected } from '@/components/shared/is-wallet-disconnected'
+import { FADE_DOWN_ANIMATION_VARIANTS } from '@/config/design'
+import { trimFormattedBalance } from '@/lib/utils'
+
+import AllocationTable from './allocationTable'
+
 
 export default function PageDashboard() {
   // Get wallet address
   const { address } = useAccount()
 
-  // Get token amounts
-  const { data: avaxBalance } = useBalance({
-    address: address,
-  })
-  const avaxAmount = Number(trimFormattedBalance(avaxBalance?.formatted, 4))
+  const { data: balance } = useBalance({ address })
+  const { data: rawAlotBalance } = useBalance({ address: address, token: "0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6" })
+  const { data: rawUsdcBalance } = useBalance({ address: address, token: "0x5425890298aed601595a70AB815c96711a31Bc65" })
+  const { data: rawWethBalance } = useBalance({ address: address, token: "0xc42E4b495020b87a2f2F7b4fb817F79fcF7043E2" })
+  const avaxBalance = Number(trimFormattedBalance(balance?.formatted, 4));
+  const alotBalance = Number(trimFormattedBalance(rawAlotBalance?.formatted, 4));
+  const usdcBalance = Number(trimFormattedBalance(rawUsdcBalance?.formatted, 4));
+  const wethBalance = Number(trimFormattedBalance(rawWethBalance?.formatted, 4));
+  const avaxBalanceUsd = avaxBalance * 10.19; //40.49
+  const alotBalanceUsd = alotBalance * 0.39; //1.56
+  const wethBalanceUsd = wethBalance * 1653.77; //3.97
+                                                //usd balance: 2
+  const nav = avaxBalanceUsd + wethBalanceUsd + alotBalanceUsd + usdcBalance; //48.02
+  
+  const avaxCurrent = Math.round(avaxBalanceUsd / nav * 100); // 30%
+  const alotCurrent = Math.round(alotBalanceUsd / nav * 100);        // 10%
+  const usdcCurrent = Math.round(usdcBalance / nav * 100);          // 40%
+  const wethCurrent = Math.round(wethBalanceUsd / nav * 100);       // 20%
 
-  const { data: alotBalance } = useBalance({
-    address: address,
-    token: "0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6",
-  })
-  const alotAmount = Number(trimFormattedBalance(alotBalance?.formatted, 4))
+  //User inputs target %. Ensure user inputs percentages rounded to full number
+  const avaxTarget = 20;
+  const alotTarget = 10;
+  const usdcTarget = 40;
+  const wethTarget = 30;
 
-  const { data: usdcBalance } = useBalance({
-    address: address,
-    token: "0x5425890298aed601595a70AB815c96711a31Bc65",
-  })
-  const usdcAmount = Number(trimFormattedBalance(usdcBalance?.formatted, 4))
+  const avaxDiff = avaxTarget - Math.round(avaxBalanceUsd / nav * 100);  //20 - (40.49 / 48.02*100)  = 19.99
+  const alotDiff = alotTarget - Math.round(alotBalanceUsd / nav * 100);
+  const usdcDiff = usdcTarget - Math.round(usdcBalance / nav * 100);
+  const wethDiff = wethTarget - Math.round(wethBalanceUsd / nav * 100);
 
-  const { data: wethBalance } = useBalance({
-    address: address,
-    token: "0xc42E4b495020b87a2f2F7b4fb817F79fcF7043E2",
-  })
-  const wethAmount = Number(trimFormattedBalance(wethBalance?.formatted, 4))
 
-  // Get token values in USD
-  const avaxValue = avaxAmount * 9.905
-  const alotValue = alotAmount * 0.3225
-  const usdcValue = usdcAmount * 1
-  const wethValue = wethAmount * 1628.2
+  const avaxAmount = +((nav * (avaxTarget * 0.01)) / 10.19).toFixed(2) - avaxBalance;
+  const alotAmount = +((nav * (alotTarget * 0.01)) / 0.39).toFixed(2) - alotBalance;
+  const usdcAmount = +((nav * (usdcTarget * 0.01)) / 1).toFixed(2) - usdcBalance;
+  const wethAmount = +((nav * (wethTarget * 0.01)) / 1653.77).toFixed(4) - wethBalance;
 
-  // Compute net asset value
-  const nav = avaxValue + alotValue + usdcAmount + wethAmount
 
-  // Compute current asset allocation
-  const avaxCurrentAlloc = Math.round((avaxValue / nav) * 100)
-  const alotCurrentAlloc = Math.round((alotValue / nav) * 100)
-  const usdcCurrentAlloc = Math.round((usdcValue / nav) * 100)
-  const wethCurrentAlloc = Math.round((wethValue / nav) * 100)
-
-  // Hardcode target asset allocation for first render
-  const avaxTargetAlloc = 20
-  const alotTargetAlloc = 10
-  const usdcTargetAlloc = 40
-  const wethTargetAlloc = 30
-
-  // Compute delta between current and target allocation
-  const avaxDelta = avaxTargetAlloc - avaxCurrentAlloc
-  const alotDelta = alotTargetAlloc - alotCurrentAlloc
-  const usdcDelta = usdcTargetAlloc - usdcCurrentAlloc
-  const wethDelta = wethTargetAlloc - wethCurrentAlloc
-
-  // Compute buy/sell amount
-  const avaxReaAlloc = +(((avaxDelta * nav) / 10.19) * 0.01).toFixed(2)
-  const alotReaAlloc = +(((alotDelta * nav) / 0.39) * 0.01).toFixed(2)
-  const usdcReaAlloc = +(((usdcDelta * nav) / 1) * 0.01).toFixed(2)
-  const wethReaAlloc = +(((wethDelta * nav) / 1653.77) * 0.01).toFixed(4)
 
   //imports for table view
 
@@ -162,8 +151,8 @@ export default function PageDashboard() {
         <div className="flex-center col-span-12 flex flex-col lg:col-span-9">
           <div className="text-center">
             <h3 className="font-primary text-2xl font-bold lg:text-6xl">
-              <span className="text-gradient-secondary">
-                Your Portfolio <WalletEnsName />
+              <span className="text-gradient-sand">
+                Your Portfolio
               </span>
             </h3>
             <span className="font-light">
